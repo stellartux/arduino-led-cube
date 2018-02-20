@@ -3,15 +3,16 @@
 
 /*
  * LED Cube
- * 64 LEDs on 16 wires
+ * 3x3x3
  */
 
-Pin cathodePins[] {3, 2, 14, 15, 16, 17, 18, 19};
-Pin anodePins[] {4};
+Pin cathodePins[] {16, 19, 2, 15, 18, 4, 14, 17, 7};
+Pin anodePins[] {3, 5, 6};
 int cSize = sizeof(cathodePins) / sizeof(Pin);
 int aSize = sizeof(anodePins) / sizeof(Pin);
 
 class Light {
+  private:
     int cathode;
     int anode;
   public:
@@ -34,30 +35,34 @@ class Light {
 };
 
 class Frame {
-  int number;
-  byte data[8];
+  bool lit[27];
+  int brightness[3];
+  int frametime;
 };
 
-Light lights[4][4][4];
+Frame * currentFrame;
+
+void drawFrame(Frame f) {
+  for (int b = 0; b < 3; b++) {
+    for (int c = 0; c < 9; c++) {
+
+    }
+  }
+};
 
 void setup() {
-  Pin(13).setLow();
+
+  Pin lbi = Pin(LED_BUILTIN);
+  lbi.setOutput();
+  lbi.setLow();
   for (int i = 0; i < cSize; i++) {
     cathodePins[i].setOutput();
   }
   for (int i = 0; i < aSize; i++) {
     anodePins[i].setOutput();
   }
-}
 
-void loop() {
-  for (int i = 0; i < cSize; i++) {
-    for (int j = 0; j < aSize; j++) {
-      cathodePins[i].setHigh();
-      anodePins[j].setHigh();
-      delay(50);
-      cathodePins[i].setLow();
-      anodePins[j].setLow();
-    }
-  }
-}
+  Tasker tasker;
+  tasker.run();
+
+};
